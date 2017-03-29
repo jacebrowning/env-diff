@@ -1,7 +1,5 @@
 import logging
 
-import yorm
-
 from .models import Config, Environment
 
 
@@ -16,7 +14,7 @@ def init_config():
         return config, False
 
     log.info("Generating config file...")
-    config = yorm.create(Config)
+    config = Config.new()
 
     config.files = ["app.json", ".env"]
     config.environments = [
@@ -28,6 +26,6 @@ def init_config():
 
 
 def find_config():
-    config = yorm.find(Config)
+    config = Config.find()
 
     return config

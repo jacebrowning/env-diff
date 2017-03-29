@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fc494cdb48c14463c2309d8c04596185e51c670280dcde51647f1878fe82d265"
+            "sha256": "1a0b3cc84ab36dc2ca9a529844407293e3d8e2021f6941d27050e77716755b51"
         },
         "requires": {},
         "sources": [
@@ -12,18 +12,7 @@
         ]
     },
     "default": {
-        "PyYAML": {
-            "hash": "sha256:592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab",
-            "version": "==3.12"
-        },
-        "YORM": {
-            "hash": "sha256:f706f91832d4700795a97e5a4d8b8a389baa8d9c0fe806c1ce052aea0a12a002",
-            "version": "==1.4.dev1"
-        },
-        "simplejson": {
-            "hash": "sha256:953be622e88323c6f43fad61ffd05bebe73b9fd9863a46d68b052d2aa7d71ce2",
-            "version": "==3.10.0"
-        }
+        "YORM": "==1.4dev3"
     },
     "develop": {
         "Jinja2": {
