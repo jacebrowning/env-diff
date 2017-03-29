@@ -91,7 +91,11 @@ DEPENDENCIES := $(ENV)/.installed
 METADATA := *.egg-info
 
 .PHONY: install
-install: $(DEPENDENCIES) $(METADATA)
+install: $(METADATA) $(DEPENDENCIES)
+
+$(METADATA): $(PIP) setup.py
+	$(PYTHON) setup.py develop
+	@ touch $@
 
 $(DEPENDENCIES): $(PIP) Pipfile*
 	pipenv install --dev --ignore-hashes
@@ -102,10 +106,6 @@ else ifdef MAC
 else ifdef LINUX
 	$(PIP) install pyinotify
 endif
-	@ touch $@
-
-$(METADATA): $(PIP) setup.py
-	$(PYTHON) setup.py develop
 	@ touch $@
 
 $(PIP):

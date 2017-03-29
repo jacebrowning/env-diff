@@ -17,8 +17,24 @@ def describe_cli():
 
     def describe_init():
 
-        def when_config_missing(runner):
+        def when_config_missing(runner, tmpdir):
+            tmpdir.chdir()
+
             result = runner.invoke(main, ['--init'])
 
+            expect(result.output) == (
+                "Generated config file: {}/env-diff.yml\n".format(tmpdir) +
+                "Edit this file to match your application\n"
+            )
             expect(result.exit_code) == 0
-            expect(result.output) == "Created env-diff.yml\n"
+
+    def describe_run():
+
+        def when_config_missing(runner, tmpdir):
+            tmpdir.chdir()
+
+            result = runner.invoke(main, [])
+
+            expect(result.output) == \
+                "No config file found, generate one with '--init'\n"
+            expect(result.exit_code) == 1

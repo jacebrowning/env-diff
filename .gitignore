@@ -1,3 +1,5 @@
+env-diff.yml
+
 # Temporary Python files
 *.pyc
 *.egg-info

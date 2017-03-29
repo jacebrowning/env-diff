@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import yorm
 from yorm.types import String, List, AttributeDictionary
 
@@ -14,8 +16,18 @@ class Environment(AttributeDictionary):
 
 @yorm.attr(files=List.of_type(String))
 @yorm.attr(environments=List.of_type(Environment))
-@yorm.sync("{self.path}")
+@yorm.sync("{self.root}/{self.filename}", auto_create=False)
 class Config:
 
-    def __init__(self, path="env-diff.yml"):
-        self.path = path
+    def __init__(self, filename="env-diff.yml"):
+        self.root = Path.cwd()
+        self.filename = filename
+        self.files = []
+        self.environments = []
+
+    def __str__(self):
+        return str(self.path)
+
+    @property
+    def path(self):
+        return Path(self.root, self.filename)

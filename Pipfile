@@ -3,7 +3,7 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [packages]
-testpackage = "*"
+YORM = "==1.4dev1"
 
 [dev-packages]
 pycodestyle = "*"
@@ -25,8 +25,8 @@ PyInstaller = "*"
 
 [dev-packages.pylint]
 git = "https://github.com/PyCQA/pylint.git"
-ref = "e0fdd25c214e60bef10fbaa46252f4aaa74de8c2"
+ref = "da2e9724a195ea48451222457e56fbb9311186da"
 
 [dev-packages.astroid]
 git = "https://github.com/PyCQA/astroid.git"
-ref = "4e7d9fee4080d2e0db67a3e0463be8b196e56a95"
+ref = "31f21cd2a45be5f8e7d198fb8605b9122051f8e5"

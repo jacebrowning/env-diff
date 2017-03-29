@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cbebbcb93442745b5e9706824e8b35c87c9348fff8b7095e609c1afa8a20f7f4"
+            "sha256": "fc494cdb48c14463c2309d8c04596185e51c670280dcde51647f1878fe82d265"
         },
         "requires": {},
         "sources": [
@@ -12,29 +12,17 @@
         ]
     },
     "default": {
-        "appdirs": {
-            "hash": "sha256:d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e",
-            "version": "==1.4.3"
+        "PyYAML": {
+            "hash": "sha256:592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab",
+            "version": "==3.12"
         },
-        "packaging": {
-            "hash": "sha256:99276dc6e3a7851f32027a68f1095cd3f77c148091b092ea867a351811cfe388",
-            "version": "==16.8"
+        "YORM": {
+            "hash": "sha256:f706f91832d4700795a97e5a4d8b8a389baa8d9c0fe806c1ce052aea0a12a002",
+            "version": "==1.4.dev1"
         },
-        "pyparsing": {
-            "hash": "sha256:fee43f17a9c4087e7ed1605bd6df994c6173c1e977d7ade7b651292fab2bd010",
-            "version": "==2.2.0"
-        },
-        "setuptools": {
-            "hash": "sha256:e436d8c9dcf67ea8902bfa7cce1ef698f36bf303f13b4f62a5668891ecd380dd",
-            "version": "==34.3.3"
-        },
-        "six": {
-            "hash": "sha256:0ff78c403d9bccf5a425a6d31a12aa6b47f1c21ca4dc2573a7e2f32a97335eb1",
-            "version": "==1.10.0"
-        },
-        "testpackage": {
-            "hash": "sha256:fd0076de3a2c8c695826e466cbb0f9febc6ea8474302ec3e673dbe46cd278b6a",
-            "version": "==2.27"
+        "simplejson": {
+            "hash": "sha256:953be622e88323c6f43fad61ffd05bebe73b9fd9863a46d68b052d2aa7d71ce2",
+            "version": "==3.10.0"
         }
     },
     "develop": {
@@ -72,7 +60,7 @@
         },
         "astroid": {
             "git": "https://github.com/PyCQA/astroid.git",
-            "ref": "4e7d9fee4080d2e0db67a3e0463be8b196e56a95"
+            "ref": "31f21cd2a45be5f8e7d198fb8605b9122051f8e5"
         },
         "backports.shutil_get_terminal_size": {
             "hash": "sha256:0975ba55054c15e346944b38956a4c9cbee9009391e41b86c68990effb8c1f64",
@@ -140,7 +128,7 @@
         },
         "pylint": {
             "git": "https://github.com/PyCQA/pylint.git",
-            "ref": "e0fdd25c214e60bef10fbaa46252f4aaa74de8c2"
+            "ref": "da2e9724a195ea48451222457e56fbb9311186da"
         },
         "pyparsing": {
             "hash": "sha256:fee43f17a9c4087e7ed1605bd6df994c6173c1e977d7ade7b651292fab2bd010",

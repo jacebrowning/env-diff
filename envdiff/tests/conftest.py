@@ -6,6 +6,7 @@ import logging
 def pytest_configure(config):
     """Disable verbose output when running tests."""
     logging.basicConfig(level=logging.DEBUG)
+    logging.getLogger('yorm').setLevel(logging.WARNING)
 
     terminal = config.pluginmanager.getplugin('terminal')
     base = terminal.TerminalReporter

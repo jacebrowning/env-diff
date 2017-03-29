@@ -77,5 +77,6 @@ setuptools.setup(
     install_requires=[
         "YORM ~= 1.3",
         "click ~= 6.7",
+        "crayons ~= 0.1.2",
     ]
 )
