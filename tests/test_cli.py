@@ -1,4 +1,3 @@
-"""Sample integration test module using pytest-describe and expecter."""
 # pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned,singleton-comparison
 
 import pytest
@@ -16,16 +15,10 @@ def runner():
 
 def describe_cli():
 
-    def describe_conversion():
+    def describe_init():
 
-        def when_integer(runner):
-            result = runner.invoke(main, ['42'])
-
-            expect(result.exit_code) == 0
-            expect(result.output) == "12.80165\n"
-
-        def when_invalid(runner):
-            result = runner.invoke(main, ['foobar'])
+        def when_config_missing(runner):
+            result = runner.invoke(main, ['--init'])
 
             expect(result.exit_code) == 0
-            expect(result.output) == ""
+            expect(result.output) == "Created env-diff.yml\n"

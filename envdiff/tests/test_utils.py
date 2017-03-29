@@ -1,4 +1,3 @@
-"""Sample unit test module using pytest-describe and expecter."""
 # pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned,singleton-comparison
 
 from expecter import expect
@@ -6,10 +5,26 @@ from expecter import expect
 from envdiff import utils
 
 
-def describe_feet_to_meters():
+def describe_init_config():
 
-    def when_integer():
-        expect(utils.feet_to_meters(42)) == 12.80165
+    def it_sets_sample_data(tmpdir):
+        tmpdir.chdir()
 
-    def when_string():
-        expect(utils.feet_to_meters("hello")) == None
+        config = utils.init_config()
+
+        expect(config.__mapper__.data) == dict(
+            files=[
+                "app.json",
+                ".env",
+            ],
+            environments=[
+                dict(
+                    name="localhost",
+                    command="env",
+                ),
+                dict(
+                    name="production",
+                    command="heroku run env",
+                ),
+            ],
+        )

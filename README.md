@@ -28,10 +28,23 @@ $ python setup.py install
 
 # Usage
 
-After installation, the package can imported:
+Generate a sample config file:
 
 ```sh
-$ python
->>> import envdiff
->>> envdiff.__version__
+$ env-diff --init
 ```
+
+Customize this file to match your project:
+
+- `files`: a list of file paths that contain the names of environment variables used in your project
+- `environments`: a list of the environments in which your project runs
+    + `name`: name of the environment
+    + `command`: command to display currently set environment variables
+
+Display the differences between environment variables in your environments:
+
+```sh
+$ env-diff
+```
+
+
