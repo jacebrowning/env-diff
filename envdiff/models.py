@@ -1,3 +1,4 @@
+import re
 import logging
 from pathlib import Path
 
@@ -11,16 +12,26 @@ log = logging.getLogger(__name__)
 
 class Variable:
 
-    def __init__(self, name, value):
+    CAPITALS = re.compile("""
+        (?: ['"] )          # any quote mark
+        (?P<name> [A-Z_]+ ) # capitals and underscores
+        (?: ['"] )          # any quote mark
+    """, re.VERBOSE)
+
+    def __init__(self, name, *, value=None, context=None):
         assert name
         self.name = name
         self.value = value
+        self.context = context
 
     def __repr__(self):
         return f"<variable: {self}>"
 
     def __str__(self):
-        return f"{self.name}={self.value}"
+        if self.value:
+            return f"{self.name}={self.value}"
+        else:
+            return f"{self.name} @ {self.context!r}"
 
     @classmethod
     def from_env(cls, line):
@@ -30,14 +41,52 @@ class Variable:
             return None
 
         if '=' not in line:
-            log.info("Skipped line without '=': %r", line)
+            log.info("Skipped line without variable: %r", line)
             return None
 
         name, value = line.split('=', 1)
-        variable = cls(name, value)
+        variable = cls(name, value=value)
         log.info("Loaded variable: %s", variable)
 
         return variable
+
+    @classmethod
+    def from_code(cls, line):
+        line = line.strip()
+        match = cls.CAPITALS.search(line)
+        if not match:
+            log.debug("Skipped line without variable: %r", line)
+            return None
+
+        name = match.group('name')
+        variable = cls(name, context=line)
+        log.info("Loaded variable: %s", variable)
+
+        return variable
+
+
+@yorm.attr(path=String)
+class SourceFile(AttributeDictionary):
+
+    def __init__(self, path):
+        super().__init__()
+        self.path = path
+        self.variables = []
+
+    def __str__(self):
+        return self.path
+
+    @property
+    def file(self):
+        return Path(self.path).open()
+
+    def fetch(self):
+        self.variables = []
+        with self.file as file:
+            for line in file:
+                variable = Variable.from_code(line)
+                if variable:
+                    self.variables.append(variable)
 
 
 @yorm.attr(name=String)
@@ -62,7 +111,7 @@ class Environment(AttributeDictionary):
                 self.variables.append(variable)
 
 
-@yorm.attr(files=List.of_type(String))
+@yorm.attr(sourcefiles=List.of_type(SourceFile))
 @yorm.attr(environments=List.of_type(Environment))
 @yorm.sync("{self.root}/{self.filename}", auto_create=False, auto_save=False)
 class Config(yorm.ModelMixin):
@@ -70,7 +119,7 @@ class Config(yorm.ModelMixin):
     def __init__(self, filename="env-diff.yml", root=None):
         self.root = root or Path.cwd()
         self.filename = filename
-        self.files = []
+        self.sourcefiles = []
         self.environments = []
 
     def __str__(self):

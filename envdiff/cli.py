@@ -34,6 +34,13 @@ def main(init=False, verbose=0):
         click.echo(cyan("Generate one with the '--init' command"))
         sys.exit(1)
 
+    for sourcefile in config.sourcefiles:
+        click.echo(magenta("Loading variables from source file: ") +
+                   white(f"{sourcefile}", bold=True))
+        with blindspin.spinner():
+            sourcefile.fetch()
+        print(sourcefile.variables)
+
     for environment in config.environments:
         click.echo(magenta("Loading variables from environment: ") +
                    white(f"{environment}", bold=True))

@@ -36,8 +36,9 @@ $ env-diff --init
 
 Customize this file to match your project:
 
-- `files`: a list of file paths that contain the names of environment variables used in your project
-- `environments`: a list of the environments in which your project runs
+- `sourcefiles`: contain references to environment variables used in your project
+    + `path`: relative path to source file
+- `environments`: the environments in which your project runs
     + `name`: name of the environment
     + `command`: command to display currently set environment variables
 

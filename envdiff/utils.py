@@ -1,6 +1,6 @@
 import logging
 
-from .models import Config, Environment
+from .models import Config, SourceFile, Environment
 
 
 log = logging.getLogger(__name__)
@@ -16,7 +16,10 @@ def init_config():
     log.info("Generating config file...")
     config = Config.new()
 
-    config.files = ["app.json", ".env"]
+    config.sourcefiles = [
+        SourceFile("app.json"),
+        SourceFile(".env"),
+    ]
     config.environments = [
         Environment("localhost"),
         Environment("production", command="heroku run env"),
