@@ -16,19 +16,30 @@ log = logging.getLogger(__name__)
 @click.option('-v', '--verbose', count=True)
 def main(init=False, verbose=0):
     configure_logging(verbose)
-
     if init:
-        config, created = utils.init_config()
-        if created:
-            click.echo(green("Generated config file: ") +
-                       white(f"{config.path}", bold=True))
-        else:
-            click.echo(yellow("Config file already exists: ") +
-                       white(f"{config.path}", bold=True))
-        click.echo(cyan("Edit this file to match your application"))
-        sys.exit(0)
+        do_init()
+    else:
+        do_run()
 
+
+def do_init():
+    config, created = utils.init_config()
+
+    if created:
+        click.echo(green("Generated config file: ") +
+                   white(f"{config.path}", bold=True))
+    else:
+        click.echo(yellow("Config file already exists: ") +
+                   white(f"{config.path}", bold=True))
+
+    click.echo(cyan("Edit this file to match your application"))
+
+    sys.exit(0)
+
+
+def do_run():
     config = utils.find_config()
+
     if not config:
         click.echo(red("No config file found"))
         click.echo(cyan("Generate one with the '--init' command"))

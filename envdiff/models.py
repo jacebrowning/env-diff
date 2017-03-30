@@ -33,6 +33,12 @@ class Variable:
         else:
             return f"{self.name} @ {self.context!r}"
 
+    def __eq__(self, other):
+        for attr in {'name', 'value', 'context'}:
+            if getattr(self, attr) != getattr(other, attr):
+                return False
+        return True
+
     @classmethod
     def from_env(cls, line):
         line = line.strip()
@@ -41,10 +47,14 @@ class Variable:
             return None
 
         if '=' not in line:
-            log.info("Skipped line without variable: %r", line)
+            log.info("Skipped line without key-value: %r", line)
             return None
 
         name, value = line.split('=', 1)
+        if not name:
+            log.info("Skipped line without key: %r", line)
+            return None
+
         variable = cls(name, value=value)
         log.info("Loaded variable: %s", variable)
 
@@ -76,13 +86,9 @@ class SourceFile(AttributeDictionary):
     def __str__(self):
         return self.path
 
-    @property
-    def file(self):
-        return Path(self.path).open()
-
     def fetch(self):
         self.variables = []
-        with self.file as file:
+        with Path(self.path).open() as file:
             for line in file:
                 variable = Variable.from_code(line)
                 if variable:
