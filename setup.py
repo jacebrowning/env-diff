@@ -60,9 +60,9 @@ setuptools.setup(
     long_description=build_description(),
     license='GNU General Public License v3 (GPLv3)',
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Environment :: Console',
-        'Intended Audience :: Developers'
+        'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',

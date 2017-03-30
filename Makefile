@@ -243,15 +243,8 @@ $(PROJECT).spec:
 
 TWINE := pipenv run twine
 
-.PHONY: register
-register: dist ## Register the project on PyPI
-	@ echo NOTE: your project must be registered manually
-	@ echo https://github.com/pypa/python-packaging-user-guide/issues/263
-	# TODO: switch to twine when the above issue is resolved
-	# $(TWINE) register dist/*.whl
-
 .PHONY: upload
-upload: .git-no-changes register ## Upload the current version to PyPI
+upload: .git-no-changes dist ## Upload the current version to PyPI
 	$(TWINE) upload dist/*.*
 	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
 
