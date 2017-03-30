@@ -22,6 +22,8 @@ def init_config():
         Environment("production", command="heroku run env"),
     ]
 
+    config.save()
+
     return config, True
 
 

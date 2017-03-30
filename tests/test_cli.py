@@ -52,6 +52,8 @@ def describe_cli():
 
             result = runner.invoke(main, [])
 
-            expect(result.output) == \
-                "No config file found, generate one with '--init'\n"
+            expect(result.output) == (
+                "No config file found\n" +
+                "Generate one with the '--init' command\n"
+            )
             expect(result.exit_code) == 1
