@@ -9,7 +9,7 @@ from expecter import expect
 
 from click.testing import CliRunner
 
-from envdiff.cli import main, do_run
+from envdiff.cli import main, do_run, do_report
 from envdiff.models import Config, SourceFile, Environment
 
 
@@ -25,6 +25,10 @@ def tmp(path=Path("tmp", "int", "cli").resolve()):
     os.chdir(path)
     yield path
     os.chdir(cwd)
+
+
+def strip(tripple_quoted_string, *, indent):
+    return tripple_quoted_string.strip().replace('    ' * indent, '') + '\n'
 
 
 def describe_cli():
@@ -90,3 +94,31 @@ def describe_do_run():
             ['Variable', 'File: .env', 'File: app.py', 'Environment: test'],
             ['FOO', 'FOO=1', "os.getenv('FOO', 2)", '3'],
         ]
+
+
+def describe_do_report():
+
+    @pytest.fixture
+    def rows():
+        return [
+            ['Foo', 'Bar'],
+            ['', '42']
+        ]
+
+    def it_creates_md_and_csv(tmp, rows):
+        do_report(rows)
+
+        with tmp.joinpath("env-diff.md").open() as file:
+            text = file.read()
+            expect(text) == strip("""
+            | Foo | Bar |
+            | --- | --- |
+            |  | 42 |
+            """, indent=3)
+
+        with tmp.joinpath("env-diff.csv").open() as file:
+            text = file.read()
+            expect(text) == strip("""
+            Foo,Bar
+            ,42
+            """, indent=3)

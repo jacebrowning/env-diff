@@ -8,3 +8,7 @@
 
 - Added detection of source variables matching `export FOO=bar`.
 - Added Markdown report generation.
+
+## 0.3 (2017-03-30)
+
+- Added CSV report generation.

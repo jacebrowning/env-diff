@@ -58,7 +58,7 @@ def do_run(config=None):
         with blindspin.spinner():
             environment.fetch()
 
-    rows = utils.generate_table(config)
+    rows = list(utils.generate_table(config))
 
     return rows
 
@@ -67,6 +67,11 @@ def do_report(rows):
     path = Path.cwd().joinpath("env-diff.md")
     utils.write_markdown(rows, path)
     click.echo(green("Created Markdown report: ") +
+               white(f"{path}", bold=True), err=True)
+
+    path = Path.cwd().joinpath("env-diff.csv")
+    utils.write_csv(rows, path)
+    click.echo(green("Created CSV report: ") +
                white(f"{path}", bold=True), err=True)
 
 

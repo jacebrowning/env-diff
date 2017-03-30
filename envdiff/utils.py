@@ -1,3 +1,4 @@
+import csv
 import logging
 
 from .models import Config, SourceFile, Environment
@@ -71,3 +72,11 @@ def write_markdown(rows, path):
     with path.open('w') as file:
         for row in translate_markdown(rows):
             file.write(row + '\n')
+
+
+def write_csv(rows, path):
+    log.info("Writing to %s", path)
+    with path.open('w') as file:
+        csvfile = csv.writer(file)
+        for row in rows:
+            csvfile.writerow(row)
