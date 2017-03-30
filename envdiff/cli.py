@@ -48,8 +48,7 @@ def do_run():
     for sourcefile in config.sourcefiles:
         click.echo(magenta("Loading variables from source file: ") +
                    white(f"{sourcefile}", bold=True), err=True)
-        with blindspin.spinner():
-            sourcefile.fetch()
+        sourcefile.fetch()
 
     for environment in config.environments:
         click.echo(magenta("Loading variables from environment: ") +
