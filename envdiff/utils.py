@@ -36,10 +36,10 @@ def find_config():
     return config
 
 
-def create_table(config):
+def generate_table(config):
     containers = config.sourcefiles + config.environments
 
-    header = ["Environment Variable"] + [str(x) for x in containers]
+    header = ['Variable'] + [str(x) for x in containers]
     yield header
 
     keys = set()
@@ -57,3 +57,17 @@ def create_table(config):
             else:
                 row.append('')
         yield row
+
+
+def translate_markdown(rows):
+    for index, row in enumerate(rows):
+        yield '| ' + ' | '.join(row) + ' |'
+        if index == 0:
+            yield '| ' + ' | '.join(['---'] * len(row)) + ' |'
+
+
+def write_markdown(rows, path):
+    log.info("Writing to %s", path)
+    with path.open('w') as file:
+        for row in translate_markdown(rows):
+            file.write(row + '\n')

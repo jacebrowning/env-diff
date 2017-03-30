@@ -12,7 +12,14 @@ log = logging.getLogger(__name__)
 
 class Variable:
 
-    CAPITALS = re.compile("""
+    RE_ENV_SET = re.compile(r"""
+        (?: export\  )?         # optional export call
+        (?P<name> [A-Z_]+ )     # capitals and underscores
+        =                       # equals sign
+        (?P<value> .* )         # any value
+    """, re.VERBOSE)
+
+    RE_QUOTED_CAPITALS = re.compile(r"""
         (?: ['"] )          # any quote mark
         (?P<name> [A-Z_]+ ) # capitals and underscores
         (?: ['"] )          # any quote mark
@@ -66,7 +73,9 @@ class Variable:
     @classmethod
     def from_code(cls, line):
         line = line.strip()
-        match = cls.CAPITALS.search(line)
+
+        match = (cls.RE_ENV_SET.match(line) or
+                 cls.RE_QUOTED_CAPITALS.search(line))
         if not match:
             log.debug("Skipped line without variable: %r", line)
             return None
@@ -81,16 +90,16 @@ class Variable:
 @yorm.attr(path=String)
 class SourceFile(AttributeDictionary):
 
-    def __init__(self, path):
+    def __init__(self, path=None, variables=None):
         super().__init__()
         self.path = path
-        self.variables = []
+        self.variables = variables or []
 
     def __str__(self):
-        return self.path
+        return f"File: {self.path}"
 
     def fetch(self):
-        self.variables = []
+        self.variables.clear()
         with Path(self.path).open() as file:
             for line in file:
                 variable = Variable.from_code(line)
@@ -102,17 +111,17 @@ class SourceFile(AttributeDictionary):
 @yorm.attr(command=String)
 class Environment(AttributeDictionary):
 
-    def __init__(self, name, command="env"):
+    def __init__(self, name=None, command="env", variables=None):
         super().__init__()
         self.name = name
         self.command = command
-        self.variables = []
+        self.variables = variables or []
 
     def __str__(self):
-        return self.name
+        return f"Environment: {self.name}"
 
     def fetch(self):
-        self.variables = []
+        self.variables.clear()
         result = delegator.run(self.command)
         for line in result.out.splitlines():
             variable = Variable.from_env(line)
@@ -125,11 +134,12 @@ class Environment(AttributeDictionary):
 @yorm.sync("{self.root}/{self.filename}", auto_create=False, auto_save=False)
 class Config(yorm.ModelMixin):
 
-    def __init__(self, filename="env-diff.yml", root=None):
+    def __init__(self, filename="env-diff.yml", root=None,
+                 sourcefiles=None, environments=None):
         self.root = root or Path.cwd()
         self.filename = filename
-        self.sourcefiles = []
-        self.environments = []
+        self.sourcefiles = sourcefiles or []
+        self.environments = environments or []
 
     def __str__(self):
         return str(self.path)

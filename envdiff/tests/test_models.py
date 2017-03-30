@@ -45,9 +45,13 @@ def describe_variable():
         def with_no_caps_variable():
             expect(Variable.from_code("key=value")) == None
 
-        def with_caps_variable():
+        def with_caps_variable_in_quotes():
             expect(Variable.from_code("let 'KEY'=value")) == \
                 Variable('KEY', context="let 'KEY'=value")
+
+        def with_caps_variable_starting_line():
+            expect(Variable.from_code("KEY=value")) == \
+                Variable('KEY', context="KEY=value")
 
 
 def describe_sourcefile():
@@ -59,7 +63,7 @@ def describe_sourcefile():
     def describe_str():
 
         def is_based_on_path(sourcefile):
-            expect(str(sourcefile)) == "tmp/app.json"
+            expect(str(sourcefile)) == "File: tmp/app.json"
 
 
 def describe_environment():
@@ -71,7 +75,7 @@ def describe_environment():
     def describe_str():
 
         def is_based_on_name(environment):
-            expect(str(environment)) == "staging"
+            expect(str(environment)) == "Environment: staging"
 
 
 def describe_config():

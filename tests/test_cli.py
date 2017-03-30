@@ -1,4 +1,4 @@
-# pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned,singleton-comparison
+# pylint: disable=redefined-outer-name,unused-argument,unused-variable,expression-not-assigned,singleton-comparison
 
 import os
 from pathlib import Path
@@ -9,7 +9,8 @@ from expecter import expect
 
 from click.testing import CliRunner
 
-from envdiff.cli import main
+from envdiff.cli import main, do_run
+from envdiff.models import Config, SourceFile, Environment
 
 
 @pytest.fixture
@@ -57,3 +58,35 @@ def describe_cli():
                 "Generate one with the '--init' command\n"
             )
             expect(result.exit_code) == 1
+
+
+def describe_do_run():
+
+    @pytest.fixture
+    def config(tmpdir):
+        tmpdir.chdir()
+
+        with Path(".env").open('w') as f:
+            f.write("FOO=1")
+
+        with Path("app.py").open('w') as f:
+            f.write("os.getenv('FOO', 2)")
+
+        return Config.new(
+            sourcefiles=[
+                SourceFile(".env"),
+                SourceFile("app.py"),
+            ],
+            environments=[
+                Environment("test", command="echo FOO=3"),
+            ],
+        )
+
+    def it_returns_table_data(runner, config):
+        print(config.sourcefiles)
+        data = do_run(config)
+
+        expect(list(data)) == [
+            ['Variable', 'File: .env', 'File: app.py', 'Environment: test'],
+            ['FOO', 'FOO=1', "os.getenv('FOO', 2)", '3'],
+        ]

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "09a36984e6edf73f34901318946e47fffe711ec240983ca40d9a97a171ba2595"
+            "sha256": "c63912662d3ffbdf7bd30675586fe2bf4107a1a4ac0ce643cdbd69a893212a79"
         },
         "requires": {},
         "sources": [
@@ -17,8 +17,8 @@
             "version": "==3.12"
         },
         "YORM": {
-            "hash": "sha256:cff82426ee59a0632eec1a7a766d8850e485397427f2b1564b4260eaf9bd17db",
-            "version": "==1.4.dev4"
+            "hash": "sha256:560970b6588a3e06e16bc538669887426e923409059bfb4e8bfe02a53d26ea26",
+            "version": "==1.4.dev5"
         },
         "simplejson": {
             "hash": "sha256:953be622e88323c6f43fad61ffd05bebe73b9fd9863a46d68b052d2aa7d71ce2",

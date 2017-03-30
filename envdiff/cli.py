@@ -1,5 +1,6 @@
 import sys
 import logging
+from pathlib import Path
 
 import click
 from crayons import green, yellow, red, cyan, magenta, white
@@ -19,7 +20,8 @@ def main(init=False, verbose=0):
     if init:
         do_init()
     else:
-        do_run()
+        data = do_run()
+        do_report(data)
 
 
 def do_init():
@@ -37,8 +39,8 @@ def do_init():
     sys.exit(0)
 
 
-def do_run():
-    config = utils.find_config()
+def do_run(config=None):
+    config = config or utils.find_config()
 
     if not config:
         click.echo(red("No config file found"))
@@ -47,24 +49,25 @@ def do_run():
 
     for sourcefile in config.sourcefiles:
         click.echo(magenta("Loading variables from source file: ") +
-                   white(f"{sourcefile}", bold=True), err=True)
+                   white(f"{sourcefile.path}", bold=True), err=True)
         sourcefile.fetch()
 
     for environment in config.environments:
         click.echo(magenta("Loading variables from environment: ") +
-                   white(f"{environment}", bold=True), err=True)
+                   white(f"{environment.name}", bold=True), err=True)
         with blindspin.spinner():
             environment.fetch()
 
-    rows = utils.create_table(config)
-    show_markdown_table(rows)
+    rows = utils.generate_table(config)
+
+    return rows
 
 
-def show_markdown_table(rows):
-    for index, row in enumerate(rows):
-        click.echo('| ' + ' | '.join(row) + ' |')
-        if index == 0:
-            click.echo('| ' + ' | '.join(['---'] * len(row)) + ' |')
+def do_report(rows):
+    path = Path.cwd().joinpath("env-diff.md")
+    utils.write_markdown(rows, path)
+    click.echo(green("Created Markdown report: ") +
+               white(f"{path}", bold=True), err=True)
 
 
 def configure_logging(verbosity=0):

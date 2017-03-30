@@ -3,7 +3,7 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [packages]
-YORM = "==1.4dev4"
+YORM = "==1.4dev5"
 
 [dev-packages]
 pycodestyle = "*"
