@@ -34,3 +34,26 @@ def find_config():
     config = Config.find()
 
     return config
+
+
+def create_table(config):
+    containers = config.sourcefiles + config.environments
+
+    header = ["Environment Variable"] + [str(x) for x in containers]
+    yield header
+
+    keys = set()
+    for container in containers:
+        for variable in container.variables:
+            keys.add(variable.name)
+
+    for key in sorted(keys):
+        row = [key]
+        for container in containers:
+            for variable in container.variables:
+                if variable.name == key:
+                    row.append(variable.context or variable.value)
+                    break  # TODO: what if the variable appears multiple times?
+            else:
+                row.append('')
+        yield row

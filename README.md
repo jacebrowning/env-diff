@@ -45,7 +45,7 @@ Customize this file to match your project:
 Display the differences between environment variables in your environments:
 
 ```sh
-$ env-diff
+$ env-diff > env-diff.md
 ```
 
-
+Open the generated Markdown table in an appropriate viewer.

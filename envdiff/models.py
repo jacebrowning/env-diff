@@ -39,6 +39,9 @@ class Variable:
                 return False
         return True
 
+    def __lt__(self, other):
+        return self.name < other.name
+
     @classmethod
     def from_env(cls, line):
         line = line.strip()
@@ -134,3 +137,9 @@ class Config(yorm.ModelMixin):
     @property
     def path(self):
         return Path(self.root, self.filename)
+
+    @property
+    def variables(self):
+        for container in self.sourcefiles + self.environments:
+            for variable in container.variables:
+                yield variable

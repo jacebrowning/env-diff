@@ -47,19 +47,25 @@ def do_run():
 
     for sourcefile in config.sourcefiles:
         click.echo(magenta("Loading variables from source file: ") +
-                   white(f"{sourcefile}", bold=True))
+                   white(f"{sourcefile}", bold=True), err=True)
         with blindspin.spinner():
             sourcefile.fetch()
-        print(sourcefile.variables)
 
     for environment in config.environments:
         click.echo(magenta("Loading variables from environment: ") +
-                   white(f"{environment}", bold=True))
+                   white(f"{environment}", bold=True), err=True)
         with blindspin.spinner():
             environment.fetch()
-        print(environment.variables)
 
-    sys.exit(2)
+    rows = utils.create_table(config)
+    show_markdown_table(rows)
+
+
+def show_markdown_table(rows):
+    for index, row in enumerate(rows):
+        click.echo('| ' + ' | '.join(row) + ' |')
+        if index == 0:
+            click.echo('| ' + ' | '.join(['---'] * len(row)) + ' |')
 
 
 def configure_logging(verbosity=0):
