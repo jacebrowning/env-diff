@@ -18,7 +18,7 @@ This tool was built with [Heroku](https://www.heroku.com/continuous-delivery), b
 
 ## Installation
 
-Install env-diff with pip:
+Install `env-diff` with pip:
 
 ```sh
 $ pip install env-diff
@@ -56,15 +56,15 @@ $ env-diff
 
 # Demo
 
-Input:
+Input YAML config file:
 
 ![input](https://raw.githubusercontent.com/jacebrowning/env-diff/master/docs/demo/input.png)
 
-Run:
+Running in a terminal:
 
 ![run](https://raw.githubusercontent.com/jacebrowning/env-diff/master/docs/demo/run.png)
 
-Output:
+Output (as viewed in [TableTool](https://github.com/jakob/TableTool)):
 
 ![output](https://raw.githubusercontent.com/jacebrowning/env-diff/master/docs/demo/output.png)
 
