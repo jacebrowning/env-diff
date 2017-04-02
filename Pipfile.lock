@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c63912662d3ffbdf7bd30675586fe2bf4107a1a4ac0ce643cdbd69a893212a79"
+            "sha256": "8d71320e6ab35d87057b09e55d348447ca1b038bc92febdd8367bbdf5b4ea29e"
         },
         "requires": {},
         "sources": [
@@ -17,8 +17,8 @@
             "version": "==3.12"
         },
         "YORM": {
-            "hash": "sha256:560970b6588a3e06e16bc538669887426e923409059bfb4e8bfe02a53d26ea26",
-            "version": "==1.4.dev5"
+            "hash": "sha256:52797c801f11f6831ca4df1094f95e6a463a01be1af852e7013017bf52ced757",
+            "version": "==1.4"
         },
         "simplejson": {
             "hash": "sha256:953be622e88323c6f43fad61ffd05bebe73b9fd9863a46d68b052d2aa7d71ce2",
@@ -179,8 +179,8 @@
             "version": "==0.4.0"
         },
         "tornado": {
-            "hash": "sha256:2898f992f898cd41eeb8d53b6df75495f2f423b6672890aadaf196ea1448edcc",
-            "version": "==4.4.2"
+            "hash": "sha256:f267acc96d5cf3df0fd8a7bfb5a91c2eb4ec81d5962d1a7386ceb34c655634a8",
+            "version": "==4.4.3"
         },
         "twine": {
             "hash": "sha256:3202d943a144962a821d9c5e92e07f9442dbbe6d6f18eae74e2a725b9980c559",

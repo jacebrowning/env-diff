@@ -75,7 +75,7 @@ setuptools.setup(
     ],
 
     install_requires=[
-        "YORM ~= 1.4dev3",
+        "YORM ~= 1.4",
         "click ~= 6.7",
         "crayons == 0.1.2",
         "delegator.py == 0.0.8",
