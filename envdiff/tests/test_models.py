@@ -53,6 +53,16 @@ def describe_variable():
             expect(Variable.from_code("KEY=value")) == \
                 Variable('KEY', context="KEY=value")
 
+        def with_heroku_json_file():
+            lines = [
+                '},',
+                '"KEY" : {',
+                '  "value": "value"',
+                '},',
+            ]
+            expect(Variable.from_code(*lines, index=1)) == \
+                Variable('KEY', context='"KEY" : {"value": "value"},')
+
 
 def describe_sourcefile():
 

@@ -1,6 +1,7 @@
 import re
 import logging
 from pathlib import Path
+from contextlib import suppress
 
 import yorm
 from yorm.types import String, List, AttributeDictionary
@@ -71,17 +72,23 @@ class Variable:
         return variable
 
     @classmethod
-    def from_code(cls, line):
-        line = line.strip()
+    def from_code(cls, *lines, index=0):
+        line = lines[index].strip()
 
         match = (cls.RE_ENV_SET.match(line) or
                  cls.RE_QUOTED_CAPITALS.search(line))
         if not match:
-            log.debug("Skipped line without variable: %r", line)
+            log.debug("Skipped line %s without variable: %r", index + 1, line)
             return None
 
         name = match.group('name')
-        variable = cls(name, context=line)
+        context = line
+        with suppress(IndexError):
+            if context.endswith('{'):
+                context += lines[index + 1].strip()
+                context += lines[index + 2].strip()
+
+        variable = cls(name, context=context)
         log.info("Loaded variable: %s", variable)
 
         return variable
@@ -101,10 +108,11 @@ class SourceFile(AttributeDictionary):
     def fetch(self):
         self.variables.clear()
         with Path(self.path).open() as file:
-            for line in file:
-                variable = Variable.from_code(line)
-                if variable:
-                    self.variables.append(variable)
+            lines = file.readlines()
+        for index in range(len(lines)):
+            variable = Variable.from_code(*lines, index=index)
+            if variable:
+                self.variables.append(variable)
 
 
 @yorm.attr(name=String)
