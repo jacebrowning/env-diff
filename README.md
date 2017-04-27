@@ -2,7 +2,7 @@ Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/env-diff/
 
 # Overview
 
-`diff-env` is a command-line to tool to generate reports to compare the value of environment variables in each of your environments against the defaults defined in various files. It will help you you find:
+`env-diff` is a command-line to tool to generate reports to compare the value of environment variables in each of your environments against the defaults defined in various files. It will help you you find:
 
 - variables absent from production, but will be required for a new feature in test
 - production values that shouldn't be shared to your staging environment
