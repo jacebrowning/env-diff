@@ -77,6 +77,6 @@ def write_markdown(rows, path):
 def write_csv(rows, path):
     log.info("Writing to %s", path)
     with path.open('w') as file:
-        csvfile = csv.writer(file)
+        csvfile = csv.writer(file, lineterminator='\n')
         for row in rows:
             csvfile.writerow(row)
