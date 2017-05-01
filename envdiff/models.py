@@ -150,7 +150,7 @@ class Config(yorm.ModelMixin):
         self.environments = environments or []
 
     def __str__(self):
-        return str(self.path)
+        return str(self.path).replace('\\', '/')
 
     @property
     def path(self):

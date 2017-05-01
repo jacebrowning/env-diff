@@ -38,6 +38,7 @@ def describe_cli():
         def when_config_missing(runner, tmp):
             path = tmp.joinpath("env-diff.yml")
             with suppress(FileNotFoundError):
+                print("Deleting {}".format(path))
                 path.unlink()
 
             result = runner.invoke(main, ['--init'])
@@ -66,8 +67,9 @@ def describe_cli():
 
 def describe_do_run():
 
-    @pytest.fixture
+    @pytest.yield_fixture
     def config(tmpdir):
+        cwd = os.getcwd()
         tmpdir.chdir()
 
         with Path(".env").open('w') as f:
@@ -76,7 +78,7 @@ def describe_do_run():
         with Path("app.py").open('w') as f:
             f.write("os.getenv('FOO', 2)")
 
-        return Config.new(
+        yield Config.new(
             sourcefiles=[
                 SourceFile(".env"),
                 SourceFile("app.py"),
@@ -85,6 +87,8 @@ def describe_do_run():
                 Environment("test", command="echo FOO=3"),
             ],
         )
+
+        os.chdir(cwd)
 
     def it_returns_table_data(runner, config):
         print(config.sourcefiles)
