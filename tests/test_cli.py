@@ -19,11 +19,12 @@ def runner():
 
 
 @pytest.yield_fixture
-def tmp(path=Path("tmp", "int", "cli").resolve()):
+def tmp():
     cwd = Path.cwd()
-    path.mkdir(parents=True, exist_ok=True)
-    os.chdir(path)
-    yield path
+    dirpath = Path("tmp", "int", "cli").resolve()
+    dirpath.mkdir(parents=True, exist_ok=True)
+    os.chdir(dirpath)
+    yield dirpath
     os.chdir(cwd)
 
 
@@ -36,7 +37,7 @@ def describe_cli():
     def describe_init():
 
         def when_config_missing(runner, tmp):
-            path = tmp.joinpath("env-diff.yml")
+            path = tmp.joinpath("env-diff.yml").resolve()
             with suppress(FileNotFoundError):
                 print("Deleting {}".format(path))
                 path.unlink()
