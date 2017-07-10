@@ -8,7 +8,7 @@ Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/env-diff/
 - production values that shouldn't be shared to your staging environment
 - variables set that are no longer referenced in any files
 
-This tool was built with [Heroku](https://www.heroku.com/continuous-delivery), but should work with any infrastructure that supports running commands remotely.
+This tool was built with [Heroku](https://www.heroku.com/continuous-delivery) in mind, but should work with any infrastructure that supports running commands remotely.
 
 # Setup
 
