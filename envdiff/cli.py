@@ -1,15 +1,12 @@
 import sys
-import logging
 from pathlib import Path
 
 import click
-from crayons import green, yellow, red, cyan, magenta, white
+import log
 import blindspin
+from crayons import green, yellow, red, cyan, magenta, white
 
 from . import utils
-
-
-log = logging.getLogger(__name__)
 
 
 @click.command()
@@ -77,15 +74,13 @@ def do_report(rows):
 
 def configure_logging(verbosity=0):
     if verbosity >= 2:
-        level = logging.DEBUG
+        level = log.DEBUG
     elif verbosity >= 1:
-        level = logging.INFO
+        level = log.INFO
     else:
-        level = logging.WARNING
-
-    logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
-
-    logging.getLogger('yorm').setLevel(logging.WARNING)
+        level = log.WARNING
+    log.init(level=level, format="%(levelname)s: %(message)s")
+    log.silence('yorm', allow_warning=True)
 
 
 if __name__ == '__main__':  # pragma: no cover

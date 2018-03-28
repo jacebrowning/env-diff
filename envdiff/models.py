@@ -1,14 +1,11 @@
 import re
-import logging
 from pathlib import Path
 from contextlib import suppress
 
 import yorm
 from yorm.types import String, List, AttributeDictionary
 import delegator
-
-
-log = logging.getLogger(__name__)
+import log
 
 
 class Variable:
