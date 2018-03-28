@@ -22,7 +22,7 @@ def runner():
 def tmp():
     cwd = Path.cwd()
     dirpath = Path("tmp", "int", "cli").resolve()
-    dirpath.mkdir(parents=True, exist_ok=True)
+    dirpath.mkdir(parents=True, exist_ok=True)  # pylint: disable=no-member
     os.chdir(dirpath)
     yield dirpath
     os.chdir(cwd)

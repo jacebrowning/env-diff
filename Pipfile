@@ -1,32 +1,48 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
+name = "pypi"
+
+[requires]
+
+python_version = "3.6"
 
 [packages]
-YORM = "~=1.4"
+
+envdiff = { path = ".", editable = true }
 
 [dev-packages]
+
+# Linters
+pylint = "*"
 pycodestyle = "*"
 pydocstyle = "*"
-pytest = "*"
+
+# Testing
+pytest = "~= 3.3"
 pytest-describe = "*"
-pytest-expecter = "*"
-pytest-cov = "*"
+pytest-expecter = "~=1.1"
 pytest-random = "*"
-coverage = "*"
+pytest-cov = "*"
+freezegun = "*"
+
+# Reports
 coverage-space = "*"
+
+# Documentation
 mkdocs = "*"
 docutils = "*"
+pygments = "*"
+
+# Build
 wheel = "*"
+pyinstaller = "*"
+
+# Release
 twine = "*"
+
+# Tooling
 sniffer = "*"
-Pygments = "*"
-PyInstaller = "*"
-
-[dev-packages.pylint]
-git = "https://github.com/PyCQA/pylint.git"
-ref = "da2e9724a195ea48451222457e56fbb9311186da"
-
-[dev-packages.astroid]
-git = "https://github.com/PyCQA/astroid.git"
-ref = "31f21cd2a45be5f8e7d198fb8605b9122051f8e5"
+pync = { version = "<2.0", sys_platform = "== 'darwin'" }
+MacFSEvents = { version = "*", sys_platform = "== 'darwin'" }

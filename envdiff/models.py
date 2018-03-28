@@ -38,8 +38,7 @@ class Variable:
     def __str__(self):
         if self.value:
             return f"{self.name}={self.value}"
-        else:
-            return f"{self.name} @ {self.context!r}"
+        return f"{self.name} @ {self.context!r}"
 
     def __eq__(self, other):
         for attr in {'name', 'value', 'context'}:
