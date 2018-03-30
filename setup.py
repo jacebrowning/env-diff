@@ -73,10 +73,11 @@ setuptools.setup(
     ],
 
     install_requires=[
-        "YORM ~= 1.4",
-        "click ~= 6.7",
-        "crayons == 0.1.2",
-        "delegator.py == 0.0.8",
         "blindspin ~= 2.0.1",
+        "click ~= 6.7",
+        "crayons >= 0.1.2",
+        "delegator.py >= 0.1",
+        "minilog >= 0.3.1",
+        "YORM ~= 1.4",
     ]
 )

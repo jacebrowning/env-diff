@@ -1,10 +1,8 @@
 import csv
-import logging
+
+import log
 
 from .models import Config, SourceFile, Environment
-
-
-log = logging.getLogger(__name__)
 
 
 def init_config():
