@@ -77,7 +77,7 @@ setuptools.setup(
         "click ~= 6.7",
         "crayons >= 0.1.2",
         "delegator.py >= 0.1",
-        "minilog >= 0.3",
+        "minilog >= 0.3.1",
         "YORM ~= 1.4",
     ]
 )
